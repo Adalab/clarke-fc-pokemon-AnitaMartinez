@@ -1,36 +1,67 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pokemons: [],
+    }
+  }
+
+  sendRequest() {
+    for (let pokemonID = 1; pokemonID <= 2; pokemonID++) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}/`)
+      .then(response => {
+        response.json();
+      })
+      .then(responseJSON => {
+        const listPokemons = this.state.pokemons;
+        listPokemons.push(responseJSON);
+        this.setState({
+          pokemons: listPokemons,
+        })
+      })
+    }
+  }
+
+  componentDidMount() {
+    this.sendRequest();
+  }
 
 
   render() {
 
-    function sendRequest() {
-      axios.get(apiUrl)
-      .then( function (response) {
-        console.log(response);
-        console.log("Este es el nombre: ", response.data.forms[0].name);
-        console.log("Esta es la imagen: ", response.data.sprites.front_default);
-        console.log("Este es el tipo: ", response.data.types[0].type.name);
-        console.log("Este es el número: ", response.data.id);
-      })
-    }
-
-    let i;
-    let numberPokemon = 1;
-    let apiUrl;
-
-
-    for (i = 0; i <= 25; i++) {
-      apiUrl = "https://pokeapi.co/api/v2/pokemon/" + numberPokemon + "/";
-      numberPokemon = numberPokemon + 1;
-      sendRequest();
-    }
-
     return (
-      <p>Hola</p>
+
+      <div>
+
+        <header className="header">
+          <h1>Pokedex</h1>
+        </header>
+
+        <main>
+
+          <input type="text" className="namePokemon" value="" placeholder=" Insert a name"/>
+
+          <ul>
+            <li className="">
+              <div className="">
+                <img className="" src="" alt=""/>
+              </div>
+              <div className="">
+                <p className=""> Nº 1 </p>
+                <h2 className=""> Pikachu</h2>
+                <div className="">
+                  <p>Electricidad</p>
+                </div>
+
+              </div>
+            </li>
+          </ul>
+
+        </main>
+
+      </div>
     );
   }
 }
