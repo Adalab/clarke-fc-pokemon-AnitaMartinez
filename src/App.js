@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-    for (let numberPokemon = 1; numberPokemon < 25; numberPokemon++) {   //cambiarlo por 25
+    for (let numberPokemon = 1; numberPokemon < 10; numberPokemon++) {   //cambiarlo por 25
       fetch(`https://pokeapi.co/api/v2/pokemon/${numberPokemon}/`)
       .then(response => response.json())
       .then(results => {
@@ -38,7 +38,7 @@ class App extends Component {
             <input className="inputByName" type="text" value="" placeholder=" Insert a name"/>
           </div>
 
-          <ul>
+          <ul className="wrapper-grid">
             {this.state.pokemons.map((pokemon, index) => {
               return (
                 <li className="card" key= {index}>
