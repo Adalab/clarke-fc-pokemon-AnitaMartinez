@@ -8,28 +8,25 @@ class App extends Component {
     }
   }
 
-  sendRequest() {
-    for (let pokemonID = 1; pokemonID <= 2; pokemonID++) {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}/`)
-      .then(response => {
-        response.json();
-      })
-      .then(responseJSON => {
-        const listPokemons = this.state.pokemons;
-        listPokemons.push(responseJSON);
+  componentDidMount(){
+    for (let numberPokemon = 1; numberPokemon <= 2; numberPokemon++) {   //cambiarlo por 25
+      fetch(`https://pokeapi.co/api/v2/pokemon/${numberPokemon}/`)
+      .then(response => response.json())
+      .then(results => {
+        let listPokemons = this.state.pokemons;
+        listPokemons.push(results)
         this.setState({
-          pokemons: listPokemons,
-        })
+          pokemons: listPokemons
+        });
       })
     }
   }
 
-  componentDidMount() {
-    this.sendRequest();
-  }
-
-
   render() {
+
+    // for (let i = 0; i < this.state.pokemons.length; i++) {
+    //    <p> {this.state.pokemons[i].name} </p>
+    // }
 
     return (
 
@@ -44,19 +41,23 @@ class App extends Component {
           <input type="text" className="namePokemon" value="" placeholder=" Insert a name"/>
 
           <ul>
-            <li className="">
-              <div className="">
-                <img className="" src="" alt=""/>
-              </div>
-              <div className="">
-                <p className=""> Nº 1 </p>
-                <h2 className=""> Pikachu</h2>
-                <div className="">
-                  <p>Electricidad</p>
-                </div>
 
-              </div>
-            </li>
+            {this.state.pokemons.map((pokemon, index) => {
+              return (
+                <li className="" key= {index}>
+                  <div className="">
+                    <img className="" src={pokemon.sprites.front_default} alt=""/>
+                  </div>
+                  <div className="">
+                    <p className=""> {pokemon.id} </p>
+                    <h2 className=""> {pokemon.name} </h2>
+                    <div className="">
+                      <p> {pokemon.types[0].type.name} </p>
+                    </div>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
 
         </main>
