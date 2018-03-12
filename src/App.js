@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-    for (let numberPokemon = 1; numberPokemon <= 2; numberPokemon++) {   //cambiarlo por 25
+    for (let numberPokemon = 1; numberPokemon < 25; numberPokemon++) {   //cambiarlo por 25
       fetch(`https://pokeapi.co/api/v2/pokemon/${numberPokemon}/`)
       .then(response => response.json())
       .then(results => {
@@ -24,33 +24,30 @@ class App extends Component {
 
   render() {
 
-    // for (let i = 0; i < this.state.pokemons.length; i++) {
-    //    <p> {this.state.pokemons[i].name} </p>
-    // }
-
     return (
 
       <div>
 
         <header className="header">
-          <h1>Pokedex</h1>
+          <h1 className="tittle-lg"> Pokedex </h1>
         </header>
 
         <main>
 
-          <input type="text" className="namePokemon" value="" placeholder=" Insert a name"/>
+          <div className="align-center">
+            <input className="inputByName" type="text" value="" placeholder=" Insert a name"/>
+          </div>
 
           <ul>
-
             {this.state.pokemons.map((pokemon, index) => {
               return (
-                <li className="" key= {index}>
-                  <div className="">
+                <li className="card" key= {index}>
+                  <div className="container-image">
                     <img className="" src={pokemon.sprites.front_default} alt=""/>
                   </div>
-                  <div className="">
-                    <p className=""> {pokemon.id} </p>
-                    <h2 className=""> {pokemon.name} </h2>
+                  <div className="text-card">
+                    <p className="id"> {pokemon.id} </p>
+                    <h2 className="tittle-pokemon"> {pokemon.name} </h2>
                     <div className="">
                       <p> {pokemon.types[0].type.name} </p>
                     </div>
