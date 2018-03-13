@@ -5,11 +5,12 @@ class App extends Component {
     super(props);
     this.state = {
       pokemons: [],
+      valueInput: "",
     }
   }
 
   componentDidMount(){
-    for (let numberPokemon = 1; numberPokemon < 10; numberPokemon++) {   //cambiarlo por 25
+    for (let numberPokemon = 1; numberPokemon <= 25; numberPokemon++) {   
       fetch(`https://pokeapi.co/api/v2/pokemon/${numberPokemon}/`)
       .then(response => response.json())
       .then(results => {
@@ -22,7 +23,15 @@ class App extends Component {
     }
   }
 
+  handleInput = event => {
+    this.setState({valueInput: event.target.value});
+  }
+
   render() {
+
+    const filterByInputValue = this.state.pokemons.filter((pokemon) => {
+      return pokemon.name.toLowerCase().includes(this.state.valueInput.toLowerCase());
+    })
 
     return (
 
@@ -35,11 +44,11 @@ class App extends Component {
         <main>
 
           <div className="align-center">
-            <input className="inputByName" type="text" value="" placeholder=" Insert a name"/>
+            <input className="inputByName" onChange={this.handleInput} value={this.state.valueInput} type="text" placeholder=" Insert a name"/>
           </div>
 
           <ul className="wrapper-grid">
-            {this.state.pokemons.map((pokemon, index) => {
+            {filterByInputValue.map((pokemon, index) => {
               return (
                 <li className="card" key= {index}>
                   <div className="container-image">
