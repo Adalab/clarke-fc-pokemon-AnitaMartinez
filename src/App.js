@@ -10,14 +10,21 @@ class App extends Component {
   }
 
   componentDidMount(){
-    for (let numberPokemon = 1; numberPokemon <= 25; numberPokemon++) {   
+    let listPokemons = this.state.pokemons;
+    for (let numberPokemon = 1; numberPokemon <= 5; numberPokemon++) {
       fetch(`https://pokeapi.co/api/v2/pokemon/${numberPokemon}/`)
       .then(response => response.json())
-      .then(results => {
-        let listPokemons = this.state.pokemons;
-        listPokemons.push(results)
-        this.setState({
-          pokemons: listPokemons
+      .then(pokemonDetails => {
+        fetch(pokemonDetails.species.url)
+        .then(response => response.json())
+        .then((evolution)=> {
+          if (evolution.evolves_from_species) {
+            pokemonDetails.evolutionName = evolution.evolves_from_species.name;
+          }
+          listPokemons.push(pokemonDetails);
+          this.setState({
+            pokemons: listPokemons
+          });
         });
       })
     }
@@ -31,7 +38,7 @@ class App extends Component {
 
     const filterByInputValue = this.state.pokemons.filter((pokemon) => {
       return pokemon.name.toLowerCase().includes(this.state.valueInput.toLowerCase());
-    })
+    });
 
     return (
 
@@ -57,6 +64,7 @@ class App extends Component {
                   <div className="text-card">
                     <p className="id"> {pokemon.id} </p>
                     <h2 className="tittle-pokemon"> {pokemon.name} </h2>
+                    <h2> Viene de: {pokemon.evolutionName} </h2>
                     <div className="">
                       <p> {pokemon.types[0].type.name} </p>
                     </div>
