@@ -59,7 +59,7 @@ ul {
 
 .card {
   border-radius: 10px;
-  height: 180px;
+  height: 210px;
   width: 55%;
   border-radius: 10px;
   background-color: #bf1e2e;
@@ -113,4 +113,12 @@ ul {
   .wrapper-grid {
     grid-template-columns: 25% 25% 25%;
   }
+}
+
+/* Main */
+
+.spinner {
+  margin: auto;
+  display: block;
+  margin-top: 40px;
 }
